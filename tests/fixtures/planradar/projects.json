@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "id": "nggenml",
+      "type": "projects",
+      "attributes": {
+        "id": "nggenml",
+        "name": "Beispielprojekt Facility-/ Objektmanager"
+      }
+    },
+    {
+      "id": "wddpbya",
+      "type": "projects",
+      "attributes": {
+        "id": "wddpbya",
+        "name": "Neugasse 7, 1452 Gaubendorf"
+      }
+    }
+  ]
+}

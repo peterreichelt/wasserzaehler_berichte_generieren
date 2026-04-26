@@ -1,0 +1,23 @@
+{
+  "data": [
+    {
+      "id": "zawyzwwp",
+      "type": "ticket-attachment",
+      "attributes": {
+        "id": "zawyzwwp",
+        "attachable-id": "zawyzwwp",
+        "title": "IMG_20260318_095112.jpg"
+      }
+    }
+  ],
+  "included": [
+    {
+      "id": "zawyzwwp",
+      "type": "defectradar-issue-images",
+      "attributes": {
+        "image-url": "https://example.invalid/original.jpg",
+        "image-url-thumb": "https://example.invalid/thumb.jpg"
+      }
+    }
+  ]
+}

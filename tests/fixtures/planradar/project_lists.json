@@ -1,0 +1,75 @@
+{
+  "data": [
+    {
+      "id": "naeeaam",
+      "type": "lists",
+      "attributes": {
+        "id": "naeeaam",
+        "name": "Zählerplätze  & Zählernummern",
+        "project-id": "wddpbya"
+      }
+    }
+  ],
+  "included": [
+    {
+      "id": "gwynjadl",
+      "type": "list-entries",
+      "attributes": {
+        "id": "gwynjadl",
+        "name": "Sub_Z_1",
+        "list-id": "naeeaam",
+        "parent-id": null
+      }
+    },
+    {
+      "id": "kqewykjj",
+      "type": "list-entries",
+      "attributes": {
+        "id": "kqewykjj",
+        "name": "Haupt_Z_2",
+        "list-id": "naeeaam",
+        "parent-id": null
+      }
+    },
+    {
+      "id": "podagymy",
+      "type": "list-entries",
+      "attributes": {
+        "id": "podagymy",
+        "name": "Haupt_Z_1",
+        "list-id": "naeeaam",
+        "parent-id": null
+      }
+    },
+    {
+      "id": "bqwlpeeb",
+      "type": "list-entries",
+      "attributes": {
+        "id": "bqwlpeeb",
+        "name": "W 604823",
+        "list-id": "naeeaam",
+        "parent-id": "gwynjadl"
+      }
+    },
+    {
+      "id": "donqzbbo",
+      "type": "list-entries",
+      "attributes": {
+        "id": "donqzbbo",
+        "name": "W 85501",
+        "list-id": "naeeaam",
+        "parent-id": "kqewykjj"
+      }
+    },
+    {
+      "id": "qkypaooq",
+      "type": "list-entries",
+      "attributes": {
+        "id": "qkypaooq",
+        "name": "W 10710295",
+        "list-id": "naeeaam",
+        "parent-id": "podagymy"
+      }
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "id": "kwgkqze",
+      "type": "ticket-type-projects",
+      "attributes": {
+        "ticket-type-id": "egmmqkp",
+        "project-id": "wddpbya"
+      }
+    }
+  ],
+  "included": [
+    {
+      "id": "egmmqkp",
+      "type": "ticket-types",
+      "attributes": {
+        "id": "egmmqkp",
+        "name": "Wasserzählerablesung neu",
+        "typed-fields": {
+          "tf1f3ba4c76f5a9a9e": {
+            "name": "Zählerstand",
+            "type": "CustomFields::IntegerType"
+          },
+          "tf29707c30571959ae": {
+            "name": "Datum",
+            "type": "CustomFields::DateType"
+          },
+          "tf37ce2025589dac7a": {
+            "name": "Anmerkungen",
+            "type": "CustomFields::LongTextType"
+          },
+          "tf98c51e50d9efc265": {
+            "name": "Zählerplatz & Zählernummer",
+            "type": "CustomFields::ListType"
+          }
+        }
+      }
+    }
+  ]
+}
