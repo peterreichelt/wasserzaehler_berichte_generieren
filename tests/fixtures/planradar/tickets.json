@@ -1,0 +1,36 @@
+{
+  "data": [
+    {
+      "id": "gpxlylez",
+      "type": "tickets",
+      "attributes": {
+        "uuid": "7cc96fc4-6afb-45ac-b10f-fa589328d494",
+        "sequential-id": 1,
+        "ticket-type-id": "egmmqkp",
+        "subject": "Subzähler",
+        "typed-values": {
+          "tf1f3ba4c76f5a9a9e": 8425,
+          "tf29707c30571959ae": "2026-03-18",
+          "tf37ce2025589dac7a": "Subzähler",
+          "tf98c51e50d9efc265": "bqwlpeeb"
+        }
+      }
+    },
+    {
+      "id": "olqdpkgp",
+      "type": "tickets",
+      "attributes": {
+        "uuid": "051b5031-2fd8-4991-91d0-ba7effba4f9b",
+        "sequential-id": 2,
+        "ticket-type-id": "egmmqkp",
+        "subject": "Hauptzähler 1",
+        "typed-values": {
+          "tf1f3ba4c76f5a9a9e": 6460,
+          "tf29707c30571959ae": "2026-03-18",
+          "tf37ce2025589dac7a": "Hauptzähler 1",
+          "tf98c51e50d9efc265": "qkypaooq"
+        }
+      }
+    }
+  ]
+}

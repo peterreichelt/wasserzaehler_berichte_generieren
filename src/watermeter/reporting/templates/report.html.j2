@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>{{ report_title }}</title>
+<style>
+{{ styles_css }}
+</style>
+</head>
+<body>
+{% for page in pages %}
+<section class="page {% if page.type == 'cover' %}page-cover{% endif %}">
+  {% if page.type == "cover" %}
+    <header class="topbar">
+      <div class="brand">
+        {% if report_logo_data_uri %}
+        <img class="brand-logo" src="{{ report_logo_data_uri }}" alt="ImmoScan">
+        {% else %}
+        <span class="brand-fallback">IMMOSCAN</span>
+        {% endif %}
+      </div>
+      <div class="topbar-right">
+        <div class="report-type">TECHNISCHER PRÜFBERICHT</div>
+        <div class="report-meta">{{ property_name }} · Zählerplatz: {{ meter_place }}</div>
+      </div>
+    </header>
+
+    <div class="page-content cover-content">
+      <div class="cover-headline">
+        <div class="cover-title">{{ property_name }}</div>
+        <div class="cover-subtitle">Wasserzähler-Überprüfung</div>
+      </div>
+
+      <div class="cover-grid">
+        <div class="cover-image-box">
+          {% if cover_image_data_uri %}
+            <img src="{{ cover_image_data_uri }}" alt="Titelbild">
+          {% else %}
+            <img src="{{ placeholder_cover_data_uri }}" alt="Platzhalter Titelbild">
+          {% endif %}
+        </div>
+        <aside class="cover-info-box">
+          <div class="cover-info-title">Enthaltene Informationen</div>
+          <ul class="cover-info-list">
+            <li>Zählerplatz: {{ meter_place }}</li>
+            <li>Zählernummern: {{ meter_numbers_display }}</li>
+            <li>Ablesungen: {{ total_entries }}</li>
+            <li>Zeitraum: {{ period_from }} - {{ period_to }}</li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  {% else %}
+    <header class="topbar">
+      <div class="brand">
+        {% if report_logo_data_uri %}
+        <img class="brand-logo" src="{{ report_logo_data_uri }}" alt="ImmoScan">
+        {% else %}
+        <span class="brand-fallback">IMMOSCAN</span>
+        {% endif %}
+      </div>
+      <div class="topbar-right">
+        {% if page.type == "photos" %}
+          <div class="report-type">FOTODOKUMENTATION - ZÄHLERSTÄNDE</div>
+        {% else %}
+          <div class="report-type">WASSERZÄHLER-ÜBERPRÜFUNG</div>
+        {% endif %}
+        <div class="report-meta">{{ property_name }} · Zählerplatz: {{ meter_place }}</div>
+      </div>
+    </header>
+
+    <div class="page-content {% if page.type == 'photos' %}photo-content{% else %}data-content{% endif %}{% if page.type == 'charts' %} chart-content{% endif %}">
+    {% if page.type != "photos" %}
+    <div class="summary-panel">
+      <div class="summary-row">
+        <div class="summary-cell summary-cell-meter-numbers">
+          <div class="summary-label">Zählernummer(n)</div>
+          <div class="summary-value summary-value-full summary-fit" data-fit-mode="full" data-max-font-size="12" data-min-font-size="4">{{ meter_numbers_summary }}</div>
+        </div>
+        <div class="summary-cell summary-cell-meter-place">
+          <div class="summary-label">Zählerplatz</div>
+          <div class="summary-value summary-fit" data-max-font-size="12" data-min-font-size="7">{{ meter_place }}</div>
+        </div>
+        <div class="summary-cell summary-cell-property">
+          <div class="summary-label">Liegenschaft</div>
+          <div class="summary-value summary-fit" data-max-font-size="12" data-min-font-size="7">{{ property_name }}</div>
+        </div>
+        <div class="summary-cell summary-cell-period">
+          <div class="summary-label">Ablesezeitraum</div>
+          <div class="summary-value summary-fit" data-max-font-size="12" data-min-font-size="7">{{ period_from }} - {{ period_to }}</div>
+        </div>
+        <div class="summary-cell summary-cell-count">
+          <div class="summary-label">Einträge</div>
+          <div class="summary-value summary-fit" data-max-font-size="12" data-min-font-size="7">{{ total_entries }}</div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if page.type == "table_chart_combined" %}
+      <div class="section-title">Ablesedaten</div>
+      <table class="report-table">
+        <colgroup>
+          <col class="col-date">
+          <col class="col-meter-value">
+          <col class="col-days">
+          <col class="col-consumption">
+          <col class="col-meter-number">
+          <col class="col-photo">
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="col-date">Ablesedatum</th>
+            <th class="col-meter-value">Zählerstand (m³)</th>
+            <th class="col-days">Intervall (Tage)</th>
+            <th class="col-consumption">Verbrauch (m³/Tag)</th>
+            <th class="col-meter-number">Zählernummer</th>
+            <th class="col-photo">Fotos</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in page.table_rows %}
+          <tr>
+            <td class="col-date">{{ row.date }}</td>
+            <td class="col-meter-value cell-number">{{ row.meter_value }}</td>
+            <td class="col-days {% if row.days == 'Zählerwechsel' %}cell-status{% else %}cell-number{% endif %}">{{ row.days }}</td>
+            <td class="col-consumption {% if row.daily_consumption == 'Zählerwechsel' %}cell-status{% else %}cell-number{% endif %}">{{ row.daily_consumption }}</td>
+            <td class="col-meter-number">{{ row.meter_number }}</td>
+            <td class="col-photo">{{ row.photo_no }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% for chart in page.chart_segments %}
+      <div class="chart-box">
+        <img class="chart-image" src="{{ chart.image_data_uri }}" alt="Diagramm {{ chart.index }}">
+      </div>
+      {% endfor %}
+    {% endif %}
+
+    {% if page.type == "table" %}
+      <div class="section-title">
+        Ablesedaten
+        {% if page.table_page_count > 1 %}
+        <span class="section-index">(Seite {{ page.table_page_index }} von {{ page.table_page_count }})</span>
+        {% endif %}
+      </div>
+
+      {% if page.table_layout == "one_col" %}
+      <table class="report-table">
+        <colgroup>
+          <col class="col-date">
+          <col class="col-meter-value">
+          <col class="col-days">
+          <col class="col-consumption">
+          <col class="col-meter-number">
+          <col class="col-photo">
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="col-date">Ablesedatum</th>
+            <th class="col-meter-value">Zählerstand (m³)</th>
+            <th class="col-days">Intervall (Tage)</th>
+            <th class="col-consumption">Verbrauch (m³/Tag)</th>
+            <th class="col-meter-number">Zählernummer</th>
+            <th class="col-photo">Fotos</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in page.rows %}
+          <tr>
+            <td class="col-date">{{ row.date }}</td>
+            <td class="col-meter-value cell-number">{{ row.meter_value }}</td>
+            <td class="col-days {% if row.days == 'Zählerwechsel' %}cell-status{% else %}cell-number{% endif %}">{{ row.days }}</td>
+            <td class="col-consumption {% if row.daily_consumption == 'Zählerwechsel' %}cell-status{% else %}cell-number{% endif %}">{{ row.daily_consumption }}</td>
+            <td class="col-meter-number">{{ row.meter_number }}</td>
+            <td class="col-photo">{{ row.photo_no }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="two-col-table-grid">
+        <table class="report-table">
+          <colgroup>
+            <col class="col-date">
+            <col class="col-meter-value">
+            <col class="col-days">
+            <col class="col-consumption">
+            <col class="col-meter-number">
+            <col class="col-photo">
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="col-date">Ablesedatum</th>
+              <th class="col-meter-value">Zählerstand (m³)</th>
+              <th class="col-days">Intervall (Tage)</th>
+              <th class="col-consumption">Verbrauch (m³/Tag)</th>
+              <th class="col-meter-number">Zählernummer</th>
+              <th class="col-photo">Fotos</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in page.left_rows %}
+            <tr>
+              <td class="col-date">{{ row.date }}</td>
+              <td class="col-meter-value cell-number">{{ row.meter_value }}</td>
+              <td class="col-days {% if row.days == 'Zählerwechsel' %}cell-status{% else %}cell-number{% endif %}">{{ row.days }}</td>
+              <td class="col-consumption {% if row.daily_consumption == 'Zählerwechsel' %}cell-status{% else %}cell-number{% endif %}">{{ row.daily_consumption }}</td>
+              <td class="col-meter-number">{{ row.meter_number }}</td>
+              <td class="col-photo">{{ row.photo_no }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <table class="report-table">
+          <colgroup>
+            <col class="col-date">
+            <col class="col-meter-value">
+            <col class="col-days">
+            <col class="col-consumption">
+            <col class="col-meter-number">
+            <col class="col-photo">
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="col-date">Ablesedatum</th>
+              <th class="col-meter-value">Zählerstand (m³)</th>
+              <th class="col-days">Intervall (Tage)</th>
+              <th class="col-consumption">Verbrauch (m³/Tag)</th>
+              <th class="col-meter-number">Zählernummer</th>
+              <th class="col-photo">Fotos</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in page.right_rows %}
+            <tr>
+              <td class="col-date">{{ row.date }}</td>
+              <td class="col-meter-value cell-number">{{ row.meter_value }}</td>
+              <td class="col-days {% if row.days == 'Zählerwechsel' %}cell-status{% else %}cell-number{% endif %}">{{ row.days }}</td>
+              <td class="col-consumption {% if row.daily_consumption == 'Zählerwechsel' %}cell-status{% else %}cell-number{% endif %}">{{ row.daily_consumption }}</td>
+              <td class="col-meter-number">{{ row.meter_number }}</td>
+              <td class="col-photo">{{ row.photo_no }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+    {% endif %}
+
+    {% if page.type == "charts" %}
+      <div class="section-title">
+        Tagesverbrauch
+        {% if page.chart_page_count > 1 %}
+        <span class="section-index">(Diagrammseite {{ page.chart_page_index }} von {{ page.chart_page_count }})</span>
+        {% endif %}
+      </div>
+
+      {% for chart in page.chart_segments %}
+      <div class="chart-box">
+        <img class="chart-image" src="{{ chart.image_data_uri }}" alt="Diagramm {{ chart.index }}">
+      </div>
+      {% endfor %}
+    {% endif %}
+
+    {% if page.type == "photos" %}
+      <div class="photo-grid">
+        {% for photo in page.photos %}
+        <article class="photo-card">
+          <div class="photo-card-head">
+            <div class="photo-card-title">Foto {{ "%03d"|format(photo.photo_number) }}</div>
+            <div class="photo-card-meta">{{ photo.meter_number }} · {{ photo.reading_date }}</div>
+          </div>
+          <div class="photo-frame">
+            {% if photo.image_data_uri %}
+            <img src="{{ photo.image_data_uri }}" alt="Foto {{ photo.photo_number }}">
+            {% else %}
+            <div class="photo-placeholder">Foto nicht verfügbar</div>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+    </div>
+  {% endif %}
+
+  <footer class="footer">
+    <div class="footer-left">
+      <span class="footer-text">ImmoScan Gebäudedokumentation</span>
+      <span class="footer-separator">•</span>
+      <span class="footer-text">Vertraulich</span>
+    </div>
+    <div class="footer-right">
+      <span class="footer-page-label">Seite</span>
+      <span class="page-no">{{ loop.index }} von {{ pages|length }}</span>
+    </div>
+  </footer>
+</section>
+{% endfor %}
+<script>
+  (function() {
+    function fitSummaryValue(element) {
+      var fontSize = parseFloat(element.dataset.maxFontSize || "12");
+      var minFontSize = parseFloat(element.dataset.minFontSize || "7");
+      var fitMode = element.dataset.fitMode || "default";
+      var letterSpacing = 0;
+      element.style.fontSize = fontSize + "px";
+      element.style.letterSpacing = "0px";
+      while (element.scrollWidth > element.clientWidth && fontSize > minFontSize) {
+        fontSize -= 0.25;
+        element.style.fontSize = fontSize + "px";
+      }
+      if (fitMode === "full") {
+        while (element.scrollWidth > element.clientWidth && letterSpacing > -0.5) {
+          letterSpacing -= 0.05;
+          element.style.letterSpacing = letterSpacing.toFixed(2) + "px";
+        }
+      }
+      window.__summaryFitDone = true;
+    }
+
+    function fitAllSummaryValues() {
+      document.querySelectorAll(".summary-fit").forEach(fitSummaryValue);
+      window.__summaryFitDone = true;
+    }
+
+    window.__summaryFitDone = false;
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(fitAllSummaryValues);
+    } else {
+      window.addEventListener("load", fitAllSummaryValues);
+    }
+  })();
+</script>
+</body>
+</html>

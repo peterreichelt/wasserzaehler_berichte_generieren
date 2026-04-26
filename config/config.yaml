@@ -1,0 +1,45 @@
+input_excel_path: input/wasserzaehler_auswertung_mit_zaehlerplaetzen_anonymisiert.xlsx
+output_dir: output
+customer_id: 1531527
+
+# Fokussierter Modus:
+# target_project_id: wddpbya
+# target_project_name:
+# target_meter_location: Haupt_Z_1
+
+# Sammelmodus:
+target_project_id:
+target_project_name:
+target_meter_location:
+log_level: INFO
+
+excel:
+  sheet_name: Tabelle1
+  columns:
+    meter_number: A
+    reading_date: B
+    reading_value: C
+    property_name: I
+    meter_location: N
+    consumption_delta: E
+    notes: O
+
+planradar:
+  include_attachments: true
+  request_pause_seconds: 2.1
+  attachments:
+    enabled: true
+    download_timeout_seconds: 60
+  mapping_overrides:
+    ticket_type_name: null
+    typed_field_names: {}
+    list_entry_overrides: {}
+
+reporting:
+  enabled: false
+  input_workbook_path: output/all_properties__combined_readings.xlsx
+  output_dir: output/reports
+  cover_image_dir: assets/cover-images
+  placeholder_cover_path: assets/cover-images/default.jpg
+  max_readings_per_chart_band: 13
+  min_last_chart_band_points: 5
